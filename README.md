@@ -16,23 +16,20 @@
 
 ## ✨ Features
 
--   Password can be used for a maximum of 30 days.
+-   Restricted passwords for 30 days
 -   After 30 days of password expiration, the account will be disabled.
--   The interval between two password changes is 1 day.
--   Warning 7 days before password expiration.
+-   Set the time between password changes to 1 day
+-   Warnings will be issued 7 days before the password expires
 -   Set the system default encryption algorithm to SHA512.
--   Set a session timeout policy of 900 seconds.
--   Each created user will be given their own group.
--   The newly created user home directory permissions are changed to 0750.
--   Modify the permissions of the home directory of the stock user to 0750.
--   Remove useless users and packages.
--   Hardened OpenSSH config (Some configs need to be done manually).
--   Disable login for users without home directory.
--   Disable login by default for new users.
--   Disable apport and popular-contest statistics for uploading user information.
--   Disable ads in the welcome message.
--   Disable root account.
--   Disable synchronous deletion of user groups when deleting users.
+-   Set the session timeout policy to 180 seconds
+-   Create and join a group with the same name for the new user.
+-   Set the permissions on the home directory of the new user to 0750.
+-   Set permissions on the home directory of existing users to 0750.
+-   Enhance OpenSSH configuration (some configurations need to be configured manually)
+-   Prohibit users without home directories from logging in
+-   Disable SHELL login for new users
+-   Disable uploading and user information.
+-   Prohibit simultaneous deletion of a user's group when deleting a user.
 
 There are many more settings that are not listed, and you can refer to the files in the `scripts` directory for more information.
 
