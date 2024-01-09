@@ -21,7 +21,7 @@ if (( EUID != 0 )); then
 fi
 
 # Check Rocky Linux
-if ! grep -Eqi "Rocky Linux" /etc/rocky-release; then
+if ! grep -Eqi "Rocky Linux" /etc/os-release; then
     printf '%s\n\n' "$(tput setaf 1)$(tput bold)Error: Narsil is only available for Rocky Linux!$(tput sgr0)" >&2
     exit 1
 fi
