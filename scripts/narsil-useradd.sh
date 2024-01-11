@@ -20,7 +20,7 @@ function narsil_useradd()
     # After 30 days of password expiration, the account will be disabled
     sed -i 's/INACTIVE=.*/INACTIVE=30/' /etc/default/useradd
 
-    if [[ ${VERIFY} == "Y" ]]; then
+    if [[ ${VERIFY^^} == 'Y' ]]; then
         msg_notic '\n%s\n' "• File Content: /etc/default/useradd"
         grep -Ev '^#|^$' /etc/default/useradd | uniq
     else

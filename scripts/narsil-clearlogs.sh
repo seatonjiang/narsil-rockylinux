@@ -18,9 +18,9 @@ function narsil_clearlogs()
     find /var/log -type f -regex '.*-[0-9]*$' -delete
     find /var/log -type f -regex '.*\.gz$' -delete
 
-    while IFS= read -r -d '' logfiles
+    while IFS= read -r -d '' LOGFILES
     do
-        true > "${logfiles}"
+        true > "${LOGFILES}"
     done < <(find /var/log/ -type f ! -name 'narsil-*' -print0)
 
     rm -rf /var/log/journal/*

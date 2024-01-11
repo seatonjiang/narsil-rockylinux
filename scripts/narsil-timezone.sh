@@ -17,7 +17,7 @@ function narsil_timezone()
     timedatectl set-timezone "${TIME_ZONE}"
     timedatectl set-local-rtc 0
 
-    if [[ ${VERIFY} == "Y" ]]; then
+    if [[ ${VERIFY^^} == 'Y' ]]; then
         msg_notic '\n%s\n' "• Check time zone"
         ls -la /etc/localtime
     else

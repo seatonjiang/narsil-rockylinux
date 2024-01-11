@@ -27,7 +27,7 @@ function narsil_limits()
         } > /etc/security/limits.conf
     fi
 
-    if [[ ${VERIFY} == "Y" ]]; then
+    if [[ ${VERIFY^^} == 'Y' ]]; then
         msg_notic '\n%s\n' "• File Content: /etc/security/limits.conf"
         grep -Ev '^#|^$' /etc/security/limits.conf | uniq
     else

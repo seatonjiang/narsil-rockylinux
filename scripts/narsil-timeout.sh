@@ -19,7 +19,7 @@ function narsil_timeout()
         echo "readonly TMOUT" >> /etc/profile.d/auto-logout.sh
         chmod 0644 /etc/profile.d/auto-logout.sh
 
-        if [[ ${VERIFY} == "Y" ]]; then
+        if [[ ${VERIFY^^} == 'Y' ]]; then
             msg_notic '\n%s\n' "• File Content: /etc/profile.d/"
             grep -nri "TMOUT" /etc/profile.d/
         else

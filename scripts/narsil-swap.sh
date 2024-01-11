@@ -14,24 +14,27 @@ function narsil_swap()
 {
     msg_notic '\n%s\n' "Swap space is being added, please wait..."
 
-    memory=$(free -m | awk '/Mem:/{print $2}')
+    local MEMORY
+    local MEMORY_LEVEL
 
-    if [ "${memory}" -le 1280 ]; then
-        memory_level=1G
-    elif [ "${memory}" -gt 1280 ] && [ "${memory}" -le 2500 ]; then
-        memory_level=2G
-    elif [ "${memory}" -gt 2500 ] && [ "${memory}" -le 3500 ]; then
-        memory_level=3G
-    elif [ "${memory}" -gt 3500 ] && [ "${memory}" -le 4500 ]; then
-        memory_level=4G
-    elif [ "${memory}" -gt 4500 ] && [ "${memory}" -le  8000 ]; then
-        memory_level=6G
-    elif [ "${memory}" -gt 8000 ]; then
-        memory_level=8G
+    MEMORY=$(free -m | awk '/Mem:/{print $2}')
+
+    if [ "${MEMORY}" -le 1280 ]; then
+        MEMORY_LEVEL=1G
+    elif [ "${MEMORY}" -gt 1280 ] && [ "${MEMORY}" -le 2500 ]; then
+        MEMORY_LEVEL=2G
+    elif [ "${MEMORY}" -gt 2500 ] && [ "${MEMORY}" -le 3500 ]; then
+        MEMORY_LEVEL=3G
+    elif [ "${MEMORY}" -gt 3500 ] && [ "${MEMORY}" -le 4500 ]; then
+        MEMORY_LEVEL=4G
+    elif [ "${MEMORY}" -gt 4500 ] && [ "${MEMORY}" -le  8000 ]; then
+        MEMORY_LEVEL=6G
+    elif [ "${MEMORY}" -gt 8000 ]; then
+        MEMORY_LEVEL=8G
     fi
 
     if [ "$(free -m | awk '/Swap:/{print $2}')" == '0' ]; then
-        fallocate -l "${memory_level}" /swapfile
+        fallocate -l "${MEMORY_LEVEL}" /swapfile
         chmod 600 /swapfile
         mkswap /swapfile >/dev/null 2>&1
         swapon /swapfile

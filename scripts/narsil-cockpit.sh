@@ -16,7 +16,9 @@ function narsil_cockpit()
 
     dnf remove -y cockpit* >/dev/null 2>&1
 
-    directories=(
+    local DIRECTORIES
+
+    DIRECTORIES=(
         "/run/cockpit"
         "/etc/cockpit"
         "/usr/share/cockpit"
@@ -25,8 +27,8 @@ function narsil_cockpit()
         "/usr/share/selinux/targeted/default/active/modules/100/cockpit"
     )
 
-    for directory in "${directories[@]}"; do
-        rm -rf "$directory"
+    for DIRECTORY in "${DIRECTORIES[@]}"; do
+        rm -rf "${DIRECTORY}"
     done
 
     msg_succ '%s\n' "Complete!"

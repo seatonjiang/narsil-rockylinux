@@ -22,7 +22,7 @@ function narsil_banner()
     cp ./config/banner/*-narsil-* /etc/banner/
     chmod +x /etc/banner/*-narsil-*
 
-    if [[ "${PROD_TIPS}" =~ ^['Y','y']$ ]]; then
+    if [[ "${PROD_TIPS^^}" == 'Y' ]]; then
         echo '/etc/banner/20-narsil-footer' >> /etc/profile.d/narsil-banner.sh
     fi
 

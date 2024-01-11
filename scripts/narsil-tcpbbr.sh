@@ -23,7 +23,7 @@ function narsil_tcpbbr()
         sysctl -p >/dev/null 2>&1
     fi
 
-    if [[ ${VERIFY} == "Y" ]]; then
+    if [[ ${VERIFY^^} == 'Y' ]]; then
         msg_notic '\n%s\n' "• Kernel Parameter"
         sysctl net.ipv4.tcp_available_congestion_control
         msg_notic '\n%s\n' "• Kernel Modules"

@@ -12,29 +12,31 @@
 
 function narsil_hostname()
 {
-    if [[ ${METADATA^^} == "Y" ]]; then
+    local NEW_HOSTNAME
+
+    if [[ ${METADATA^^} == 'Y' ]]; then
         if [ -n "$(wget -qO- -t1 -T2 metadata.tencentyun.com)" ]; then
-            get_hostname=$(wget -qO- -t1 -T2 metadata.tencentyun.com/latest/meta-data/instance-name)
+            NEW_HOSTNAME=$(wget -qO- -t1 -T2 metadata.tencentyun.com/latest/meta-data/instance-name)
         fi
     fi
 
-    if [ "${get_hostname}" == "未命名" ]; then
-        get_hostname='RockyLinux'
+    if [ "${NEW_HOSTNAME}" == "未命名" ]; then
+        NEW_HOSTNAME='RockyLinux'
     fi
 
     if [ 'RockyLinux' != "${HOSTNAME}" ]; then
-        get_hostname=${HOSTNAME}
+        NEW_HOSTNAME=${HOSTNAME}
     fi
 
-    msg_notic '\n%s' "Please enter new hostname [Default: ${get_hostname}]: "
+    msg_notic '\n%s' "Please enter new hostname [Default: ${NEW_HOSTNAME}]: "
 
     while :; do
-        read -r new_hostname
-        new_hostname=${new_hostname:-"${get_hostname}"}
+        read -r GET_HOSTNAME
+        GET_HOSTNAME=${GET_HOSTNAME:-"${NEW_HOSTNAME}"}
         break
     done
 
-    hostnamectl set-hostname --static "${new_hostname}"
+    hostnamectl set-hostname --static "${GET_HOSTNAME}"
     sed -i '/update_hostname/d' /etc/cloud/cloud.cfg
 
     msg_succ '\n%s\n\n' "Hostname has been changed successfully!"

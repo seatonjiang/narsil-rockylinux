@@ -21,7 +21,7 @@ function narsil_sshdconfig()
     chmod 0600 /etc/ssh/sshd_config
     systemctl restart sshd.service
 
-    if [[ ${VERIFY} == "Y" ]]; then
+    if [[ ${VERIFY^^} == 'Y' ]]; then
         msg_notic '\n%s\n' "• File Content: /etc/ssh/sshd_config"
         grep -Ev '^#|^$' /etc/ssh/sshd_config | uniq
     else

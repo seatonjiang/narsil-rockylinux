@@ -19,7 +19,7 @@ function narsil_ctrlaltdel()
 
     sed -i 's/^#CtrlAltDelBurstAction=.*/CtrlAltDelBurstAction=none/' /etc/systemd/system.conf
 
-    if [[ ${VERIFY} == "Y" ]]; then
+    if [[ ${VERIFY^^} == 'Y' ]]; then
         msg_notic '\n%s\n' "• Service Status"
         systemctl status ctrl-alt-del.target --no-pager
         msg_notic '\n%s\n' "• File Content: /etc/systemd/system.conf"

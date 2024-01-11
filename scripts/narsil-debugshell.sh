@@ -17,7 +17,7 @@ function narsil_debugshell()
     systemctl stop debug-shell.service
     systemctl mask -f debug-shell.service >/dev/null 2>&1
 
-    if [[ ${VERIFY} == "Y" ]]; then
+    if [[ ${VERIFY^^} == 'Y' ]]; then
         msg_notic '\n%s\n' "• Service Status"
         systemctl status debug-shell.service --no-pager
     else

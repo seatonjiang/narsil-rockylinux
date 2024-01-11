@@ -20,27 +20,29 @@ function narsil_ntpserver()
 
     cp ./config/chrony.conf /etc/chrony.conf
 
-    ntpserver='ntp1.tencent.com ntp2.tencent.com ntp3.tencent.com ntp4.tencent.com ntp5.tencent.com'
+    local NEW_NTPSERVER
 
-    if [ "${ntpserver}" != "${NTP_SERVER}" ]; then
-        ntpserver=${NTP_SERVER}
+    NEW_NTPSERVER='ntp1.tencent.com ntp2.tencent.com ntp3.tencent.com ntp4.tencent.com ntp5.tencent.com'
+
+    if [ "${NEW_NTPSERVER}" != "${NTP_SERVER}" ]; then
+        NEW_NTPSERVER=${NTP_SERVER}
     fi
 
-    if [[ ${METADATA^^} == "Y" ]]; then
+    if [[ ${METADATA^^} == 'Y' ]]; then
         if [ -n "$(wget -qO- -t1 -T2 metadata.tencentyun.com)" ]; then
-            ntpserver='time1.tencentyun.com time2.tencentyun.com time3.tencentyun.com time4.tencentyun.com time5.tencentyun.com'
+            NEW_NTPSERVER='time1.tencentyun.com time2.tencentyun.com time3.tencentyun.com time4.tencentyun.com time5.tencentyun.com'
         fi
     fi
 
-    local server
+    local SERVER
 
-    for server in ${ntpserver}; do
-        echo "server ${server} iburst" >> /etc/chrony.conf
+    for SERVER in ${NEW_NTPSERVER}; do
+        echo "server ${SERVER} iburst" >> /etc/chrony.conf
     done
 
     systemctl restart chronyd.service
 
-    if [[ ${VERIFY} == "Y" ]]; then
+    if [[ ${VERIFY^^} == 'Y' ]]; then
         msg_notic '\n%s\n' "• NTP synchronization status"
         chronyc tracking
         msg_notic '\n%s\n' "• NTP pools"

@@ -32,7 +32,7 @@ function narsil_logindefs()
     sed -i 's@^.*ENV_SUPATH.*@ENV_SUPATH PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin@' /etc/login.defs
     sed -i 's@^.*ENV_PATH.*@ENV_PATH PATH=/usr/local/bin:/usr/bin:/bin:/snap/bin@' /etc/login.defs
 
-    if [[ ${VERIFY} == "Y" ]]; then
+    if [[ ${VERIFY^^} == 'Y' ]]; then
         msg_notic '\n%s\n' "• File Content: /etc/login.defs"
         grep -Ev '^#|^$' /etc/login.defs | uniq
     else
