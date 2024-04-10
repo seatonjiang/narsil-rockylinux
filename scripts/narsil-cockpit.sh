@@ -16,8 +16,6 @@ function narsil_cockpit()
 
     dnf remove -y cockpit* >/dev/null 2>&1
 
-    local DIRECTORIES
-
     DIRECTORIES=(
         "/run/cockpit"
         "/etc/cockpit"

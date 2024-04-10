@@ -23,9 +23,6 @@ function narsil_clearlogs()
         true > "${LOGFILES}"
     done < <(find /var/log/ -type f ! -name 'narsil-*' -print0)
 
-    rm -rf /var/log/journal/*
-    systemctl restart systemd-journald.service
-
     dnf clean all >/dev/null 2>&1
     history -c
     history -w

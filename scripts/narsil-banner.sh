@@ -14,6 +14,8 @@ function narsil_banner()
 {
     msg_info '\n%s\n' "[${STATS}] Add login banner (system info, disk usage and docker status)"
 
+    PROD_TIPS=${PROD_TIPS:-'Y'}
+
     mkdir -p /etc/banner
 
     cp ./config/banner.sh /etc/profile.d/narsil-banner.sh
