@@ -15,12 +15,9 @@ function narsil_banner()
     msg_info '\n%s\n' "[${STATS}] Add login banner (system info, disk usage and docker status)"
 
     PROD_TIPS=${PROD_TIPS:-'Y'}
-    METADATA=${METADATA:-'Y'}
 
-    if [[ ${METADATA^^} == 'Y' ]]; then
-        if [ -n "$(wget -qO- -t1 -T2 100.100.100.200)" ]; then
-            find /etc/motd -type f -delete
-        fi
+    if [ -n "$(wget -qO- -t1 -T2 100.100.100.200)" ]; then
+        find /etc/motd -type f -delete
     fi
 
     mkdir -p /etc/banner
