@@ -14,17 +14,15 @@ function narsil_dnsserver()
 {
     msg_info '\n%s\n' "[${STATS}] Change DNS Server"
 
-    local NEW_DNSSERVER
-
-    NEW_DNSSERVER='119.29.29.29 223.5.5.5'
-
-    if [ "${NEW_DNSSERVER}" != "${DNS_SERVER}" ]; then
-        NEW_DNSSERVER=${DNS_SERVER}
-    fi
+    VERIFY=${VERIFY:-'Y'}
+    METADATA=${METADATA:-'Y'}
+    DNS_SERVER=${DNS_SERVER:-'119.29.29.29 223.5.5.5'}
 
     if [[ ${METADATA^^} == 'Y' ]]; then
         if [ -n "$(wget -qO- -t1 -T2 metadata.tencentyun.com)" ]; then
-            NEW_DNSSERVER='183.60.83.19 183.60.82.98'
+            DNS_SERVER='183.60.83.19 183.60.82.98'
+        elif [ -n "$(wget -qO- -t1 -T2 100.100.100.200)" ]; then
+            DNS_SERVER='100.100.2.136 100.100.2.138'
         fi
     fi
 
@@ -32,8 +30,8 @@ function narsil_dnsserver()
         sed -i '/resolv_conf/d' /etc/cloud/cloud.cfg
     fi
 
-    nmcli con mod "System eth0" ipv4.dns "${NEW_DNSSERVER}" >/dev/null 2>&1
-    nmcli con mod "eth0" ipv4.dns "${NEW_DNSSERVER}" >/dev/null 2>&1
+    nmcli con mod "System eth0" ipv4.dns "${DNS_SERVER}" >/dev/null 2>&1
+    nmcli con mod "eth0" ipv4.dns "${DNS_SERVER}" >/dev/null 2>&1
 
     sed -i '/PEERDNS=/d' /etc/sysconfig/network-scripts/ifcfg-eth0
     echo "PEERDNS=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0

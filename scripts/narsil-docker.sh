@@ -14,29 +14,19 @@ function narsil_docker()
 {
     msg_notic '\n%s\n\n' "Docker Engine is installing, please wait..."
 
-    local DOCKER_CE
-    local DOCKER_MIRRORS
-    local DOCKER_HUB
-
-    DOCKER_CE='https://mirrors.cloud.tencent.com/docker-ce/linux/centos/docker-ce.repo'
-    DOCKER_MIRRORS='mirrors.cloud.tencent.com'
-    DOCKER_HUB='https://hub.c.163.com'
-
-    if [ "${DOCKER_CE}" != "${DOCKER_CE_REPO}" ]; then
-        DOCKER_CE=${DOCKER_CE_REPO}
-    fi
-
-    if [ "${DOCKER_MIRRORS}" != "${DOCKER_CE_MIRROR}" ]; then
-        DOCKER_MIRRORS=${DOCKER_CE_MIRROR}
-    fi
-
-    if [ "${DOCKER_HUB}" != "${DOCKER_HUB_MIRRORS}" ]; then
-        DOCKER_HUB=${DOCKER_HUB_MIRRORS}
-    fi
+    DOCKER_CE_REPO=${DOCKER_CE_REPO:-'https://mirrors.cloud.tencent.com/docker-ce'}
+    DOCKER_HUB_MIRRORS=${DOCKER_HUB_MIRRORS:-'https://hub.c.163.com'}
+    DOCKER_CE_MIRROR=${DOCKER_CE_MIRROR:-'mirrors.cloud.tencent.com'}
+    VERIFY=${VERIFY:-'Y'}
+    METADATA=${METADATA:-'Y'}
 
     if [[ ${METADATA^^} == 'Y' ]]; then
         if [ -n "$(wget -qO- -t1 -T2 metadata.tencentyun.com)" ]; then
-            DOCKER_HUB='https://mirror.ccs.tencentyun.com'
+            DOCKER_CE_REPO='https://mirrors.cloud.tencent.com/docker-ce'
+            DOCKER_HUB_MIRRORS='https://mirror.ccs.tencentyun.com'
+        elif [ -n "$(wget -qO- -t1 -T2 100.100.100.200)" ]; then
+            DOCKER_CE_REPO='http://mirrors.cloud.aliyuncs.com/docker-ce'
+            DOCKER_HUB_MIRRORS='https://narsil.mirror.aliyuncs.com'
         fi
     fi
 
@@ -44,8 +34,8 @@ function narsil_docker()
     dnf remove -y docker* containerd.io podman* runc >/dev/null 2>&1
 
     # Install Dependencies
-    dnf config-manager --add-repo "${DOCKER_CE}"
-    sed -i "s|download.docker.com|${DOCKER_MIRRORS}/docker-ce|g" /etc/yum.repos.d/docker-ce.repo
+    dnf config-manager --add-repo "${DOCKER_CE_REPO}"/linux/centos/docker-ce.repo
+    sed -i "s|download.docker.com|${DOCKER_CE_MIRROR}/docker-ce|g" /etc/yum.repos.d/docker-ce.repo
 
     # Install Docker
     dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
@@ -55,7 +45,7 @@ function narsil_docker()
     {
         echo '{'
         echo '  "registry-mirrors": ['
-        echo "    \"${DOCKER_HUB}\""
+        echo "    \"${DOCKER_HUB_MIRRORS}\""
         echo '  ],'
         echo '  "log-driver": "json-file",'
         echo '  "log-opts": {'
