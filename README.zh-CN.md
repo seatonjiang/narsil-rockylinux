@@ -83,6 +83,9 @@ METADATA='Y'
 # 在 banner 中添加生产环境的提示
 PROD_TIPS='Y'
 
+# 无响应注销时间 (单位：秒)
+LOGOUT_TIME='180'
+
 # SSH 端口配置
 SSH_PORT='22'
 
@@ -102,6 +105,9 @@ NTP_SERVER='ntp1.tencent.com ntp2.tencent.com ntp3.tencent.com ntp4.tencent.com 
 DOCKER_CE_REPO='https://mirrors.cloud.tencent.com/docker-ce/linux/centos/docker-ce.repo'
 DOCKER_CE_MIRROR='mirrors.cloud.tencent.com'
 DOCKER_HUB_MIRRORS='https://hub-mirror.c.163.com'
+
+# Docker 源加速地址（阿里云服务器忽略此项）
+DOCKER_CE_MIRROR='mirrors.cloud.tencent.com'
 ```
 
 ## 📂 目录结构

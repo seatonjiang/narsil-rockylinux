@@ -77,6 +77,9 @@ METADATA='Y'
 # Production Environment Reminder
 PROD_TIPS='Y'
 
+# Auto logout time (Unit: second)
+LOGOUT_TIME='180'
+
 # SSH Port Config
 SSH_PORT='22'
 
@@ -93,9 +96,11 @@ DNS_SERVER='119.29.29.29 223.5.5.5'
 NTP_SERVER='ntp1.tencent.com ntp2.tencent.com ntp3.tencent.com ntp4.tencent.com ntp5.tencent.com'
 
 # Docker Config
-DOCKER_CE_REPO='https://mirrors.cloud.tencent.com/docker-ce/linux/centos/docker-ce.repo'
+DOCKER_CE_REPO='https://mirrors.cloud.tencent.com/docker-ce'
+DOCKER_HUB_MIRRORS='https://hub.c.163.com'
+
+# Ignore this item when it is Alibaba Cloud
 DOCKER_CE_MIRROR='mirrors.cloud.tencent.com'
-DOCKER_HUB_MIRRORS='https://hub-mirror.c.163.com'
 ```
 
 ## 📂 Structure
